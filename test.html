@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Guim Test</title>
+        <link rel="stylesheet" type="text/css" href="src/guim.css"/>
+    </head>
+    <body>
+        <script src="build/bundle.min.js"></script>
+        <script>
+            let w = new guim.Wrapper(document.body);
+            let t = new guim.Text('Click me');
+            t.parent = w;
+        </script>
+    </body>
+</html>

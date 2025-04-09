@@ -1,0 +1,30 @@
+html, body {
+    margin:0;
+    font-family:sans-serif;
+}
+
+.gui-button {
+    padding:4px 7px;
+    background:#ccc;
+    border:none;
+    border-radius:3px;
+    user-select: none;
+    display:flex;
+    align-items:center;
+}
+.gui-button:hover {
+    background:#aaa;
+}
+.gui-button:active {
+    background:#888;
+}
+
+.gui-button.gui-toggle-button.gui-toggle-button-active {
+    background:#888;
+}
+.gui-button.gui-toggle-button.gui-toggle-button-active:hover {
+    background:#666;
+}
+.gui-button.gui-toggle-button.gui-toggle-button-active:active {
+    background:#888;
+}

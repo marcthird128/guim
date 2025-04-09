@@ -1,0 +1,23 @@
+{
+  "name": "guim",
+  "version": "1.0.0",
+  "description": "Simple GUI library for web apps",
+  "keywords": [
+    "gui",
+    "library",
+    "web"
+  ],
+  "license": "MIT",
+  "author": "Maza",
+  "type": "commonjs",
+  "main": "./src/core.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "webpack": "^5.99.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^6.0.1"
+  }
+}
