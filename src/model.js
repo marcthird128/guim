@@ -15,14 +15,15 @@ class Model {
         this.events = {};
 
         this._parent = null;
-        this.children = [];
+        this._id = null;
+        this._classes = new Set();
+        this._children = [];
     }
 
     // parent model data,
     // makes sure the Guim
-    // children and parent properties are
-    // updated, and sets _parent
-    // USE THIS, not _parent
+    // children and parent 
+    // properties are updated
     set parent(parent) {
         // first make sure the parent is different
         if (parent == this._parent) return;
@@ -34,7 +35,7 @@ class Model {
         this._parent = parent;
 
         // if the new parent is defined, add us as a child
-        this._parent.addChild(this);
+        if (this._parent) this._parent.addChild(this);
 
         // parent was set guys
         this.dispatch('set-parent', this.parent);
@@ -43,10 +44,28 @@ class Model {
         return this._parent;
     }
 
+    // children model data
+    set children(children) {
+        // remove old children
+        this._children.forEach(c => {
+            this.removeChild(c);
+        })
+        this._children = [];
+
+        // add new children
+        children.forEach(c => {
+            this.addChild(c);
+        })
+    }
+    get children() {
+        // return a copy
+        return this._children.slice();
+    }
+
     // children model methods
     addChild(child, index = this.children.length) {
         // if child is already a child, remove it first
-        if (this.children.includes(child)) this.removeChild(child);
+        if (this._children.includes(child)) this.removeChild(child);
 
         // if the child has an other parent, remove it from its old parent
         if (child._parent) child._parent.removeChild(child);
@@ -55,18 +74,18 @@ class Model {
         // this might add it to the wrong spot
         // but just do the removing urself if u care
         // why do ppl expect libs to do everything?!?
-        this.children.splice(index, 0, child);
+        this._children.splice(index, 0, child);
 
         // send the dispatch
         this.dispatch('run-add-child', child, index);
     }
     removeChild(child) {
         // get index of child & make sure child is a child
-        let index = this.children.indexOf(child);
+        let index = this._children.indexOf(child);
         if (index == -1) return;
 
         // delete it from the children array
-        this.children.splice(index, 1);
+        this._children.splice(index, 1);
 
         // child now has no parent
         child._parent = null;
@@ -76,17 +95,57 @@ class Model {
     }
     setChildAt(index, child) {
         // get the old child at the index and remove it if it exists
-        let old = this.children[index];
+        let old = this._children[index];
         if (old) this.removeChild(old);
 
         // add the new child to the index
         this.addChild(child, index);
     }
     getChildAt(index) {
-        return this.children[index];
+        return this._children[index];
     }
     indexOfChild(child) {
-        return this.children.indexOf(child);
+        return this._children.indexOf(child);
+    }
+
+    // id model data
+    set id(id) {
+        this._id = id;
+        this.dispatch('set-id', this.id);
+    }
+    get id() {
+        return this._id;
+    }
+
+    // classes model data  
+    set classes(classes) {
+        // remove old classes
+        this._classes.forEach(c => {
+            this.removeClass(c);
+        })
+        this._classes = [];
+
+        // add new classes
+        classes.forEach(c => {
+            this.addClass(c);
+        })
+    }
+    get classes() {
+        // return a copy
+        return new Set(this._classes);
+    }
+
+    // classes model methods
+    addClass(cls) {
+        this._classes.add(cls);
+        this.dispatch('run-add-class', cls);
+    }
+    removeClass(cls) {
+        this._classes.delete(cls);
+        this.dispatch('run-remove-class', cls);
+    }
+    hasClass(cls) {
+        return this._classes.has(cls);
     }
     
     // listen for an event

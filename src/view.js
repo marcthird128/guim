@@ -15,16 +15,6 @@ class View {
     constructor(element) {
         this.element = element;
 
-        // this is fired
-        // when the parent
-        // is changed, so we need to
-        // do nothing
-        // and NOT update the DOM since the model
-        // will send a different event that's more specific
-        this.element.listen('set-parent', parent => {
-           // do nothing
-        });
-
         // this is fired when a child is inserted
         // at a specific index,
         // so we need to add it to the correct parent
@@ -62,6 +52,18 @@ class View {
                 console.warn('Removed a child from the DOM that wasn\'t added first');
             }
         });
+
+        this.element.listen('run-add-class', cls => {
+            this.top.classList.add(cls);
+        });
+
+        this.element.listen('run-remove-class', cls => {
+            this.top.classList.remove(cls);
+        });
+
+        this.element.listen('set-id', id => {
+            this.top.id = id;
+        });
     }
 }
 
@@ -71,7 +73,7 @@ class TextView extends View {
         super(element);
 
         this.top = document.createElement('span');
-        this.top.classList.add('gui-text');
+        this.element.addClass('gui-text');
         this.bottom = this.top;
 
         this.element.listen('set-text', text => {
@@ -86,7 +88,7 @@ class WrapperView extends View {
         super(element);
 
         this.top = document.createElement('div');
-        this.top.classList.add('gui-wrapper');
+        this.element.addClass('gui-wrapper');
         this.bottom = this.top;
 
         this.element.listen('set-parent', () => {
