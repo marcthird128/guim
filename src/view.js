@@ -67,18 +67,14 @@ class View {
     }
 }
 
-// displys plain text
-class TextView extends View {
+// basic container
+class ContainerView extends View {
     constructor(element) {
         super(element);
 
-        this.top = document.createElement('span');
-        this.element.addClass('gui-text');
+        this.top = document.createElement('div');
+        this.element.addClass('gui-container');
         this.bottom = this.top;
-
-        this.element.listen('set-text', text => {
-            this.top.textContent = text;
-        })
     }
 }
 
@@ -101,4 +97,19 @@ class WrapperView extends View {
     }
 }
 
-module.exports = { View, TextView, WrapperView };
+// displys plain text
+class TextView extends View {
+    constructor(element) {
+        super(element);
+
+        this.top = document.createElement('span');
+        this.element.addClass('gui-text');
+        this.bottom = this.top;
+
+        this.element.listen('set-text', text => {
+            this.top.textContent = text;
+        })
+    }
+}
+
+module.exports = { View, ContainerView, WrapperView, TextView };

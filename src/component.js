@@ -10,8 +10,19 @@
  * Contains component classes
  */
 
-const { TextModel, WrapperModel } = require('./model.js');
-const { TextView, WrapperView } = require('./view.js');
+const { ContainerModel, TextModel, WrapperModel } = require('./model.js');
+const { ContainerView, TextView, WrapperView } = require('./view.js');
+
+// container
+class Container extends ContainerModel {
+    constructor(parent) {
+        super();
+
+        this.view = new ContainerView(this);
+
+        this.parent = parent;
+    }
+}
 
 // wrapper componenet
 // allows adding Guim components to DOM elements
@@ -37,4 +48,4 @@ class Text extends TextModel {
     }
 }
 
-module.exports = { Text, Wrapper };
+module.exports = { Container, Wrapper, Text };

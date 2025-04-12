@@ -175,21 +175,15 @@ class Model {
     }
 }
 
-class TextModel extends Model {
+// basic container
+class ContainerModel extends Model {
     constructor() {
         super();
     }
-    
-    // text model data
-    set text(text) {
-        this._text = text;
-        this.dispatch('set-text', this.text);
-    }
-    get text() {
-        return this._text;
-    }
 }
 
+
+// allows appending Guim componenets to DOM elements
 class WrapperModel extends Model {
     constructor() {
         super();
@@ -205,4 +199,20 @@ class WrapperModel extends Model {
     }
 }
 
-module.exports = { Model, TextModel, WrapperModel };
+// simple text
+class TextModel extends Model {
+    constructor() {
+        super();
+    }
+    
+    // text model data
+    set text(text) {
+        this._text = text;
+        this.dispatch('set-text', this.text);
+    }
+    get text() {
+        return this._text;
+    }
+}
+
+module.exports = { Model, ContainerModel, TextModel, WrapperModel };

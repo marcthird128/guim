@@ -7,12 +7,12 @@
  * use it with no restrictions
  */
 
-const { Model, TextModel, WrapperModel } = require('./model.js');
-const { View, TextView, WrapperView } = require('./view.js');
-const { Text, Wrapper } = require('./component.js');
+const { Model, ContainerModel, WrapperModel, TextModel } = require('./model.js');
+const { View, ContainerView, WrapperView, TextView } = require('./view.js');
+const { Text, Wrapper, Container } = require('./component.js');
 
 module.exports = { 
-    Model, TextModel, WrapperModel, // models
-    View, TextView, WrapperView, // views
-    Text, Wrapper, // comonenets
+    Model, ContainerModel, WrapperModel, TextModel, // models
+    View, ContainerView, WrapperView, TextView, // views
+    Container, Wrapper, Text, // comonenets
 };
