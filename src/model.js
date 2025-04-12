@@ -14,78 +14,68 @@ class Model {
     constructor() {
         this.events = {};
 
+        this._parent = null;
         this.children = [];
-    }
-
-    // Semi-internal parent,
-    // removes from old Guim parent
-    // NOT for use externally, use parent
-    set _parent(_parent) {
-        // remove from old parent if necessary
-        if (this._parent && this.parent != _parent && this._parent.indexOfChild(this) != -1) this._parent.removeChild(this);
-
-        // set internal parent
-        this.__parent = _parent;
-
-        // get the DOM to update
-        this.dispatch('set-parent', this._parent);
-    }
-    get _parent() {
-        return this.__parent;
     }
 
     // parent model data,
     // makes sure the Guim
     // children and parent properties are
     // updated, and sets _parent
-    // USE THIS, not _parent or __parent
+    // USE THIS, not _parent
     set parent(parent) {
-        // set semi-internal parent
+        // first make sure the parent is different
+        if (parent == this._parent) return;
+
+        // if we have an old parent, remove it first
+        if (this._parent) this._parent.removeChild(this);
+
+        // set the internal parent
         this._parent = parent;
 
-        // add to new parent if neccessary,
-        // addChild will automatically send
-        // the events to update the DOM
-        if (this._parent && this._parent.indexOfChild(this) == -1) this._parent.addChild(this);
+        // if the new parent is defined, add us as a child
+        this._parent.addChild(this);
+
+        // parent was set guys
+        this.dispatch('set-parent', this.parent);
     }
     get parent() {
         return this._parent;
     }
 
-    // children model data
+    // children model methods
     addChild(child, index = this.children.length) {
-        // set the childs internal parent FIRST,
-        // otherwise it will remove it from our children array.
-        // dont use parent because it will add the child
-        // to the end of our children.
-        // this will make sure it removes it
-        // from its old parent if it exists
-        child._parent = this;
+        // if child is already a child, remove it first
+        if (this.children.includes(child)) this.removeChild(child);
+
+        // if the child has an other parent, remove it from its old parent
+        if (child._parent) child._parent.removeChild(child);
 
         // add to internal children array
+        // this might add it to the wrong spot
+        // but just do the removing urself if u care
+        // why do ppl expect libs to do everything?!?
         this.children.splice(index, 0, child);
 
-        // get the DOM to update
+        // send the dispatch
         this.dispatch('run-add-child', child, index);
     }
     removeChild(child) {
-        // get the index of the child, return if this isnt a child
+        // get index of child & make sure child is a child
         let index = this.children.indexOf(child);
         if (index == -1) return;
 
-        // add it to the children array
+        // delete it from the children array
         this.children.splice(index, 1);
 
-        // set the child's internal parent to undefined
-        // this will remove it from its old parent
-        // if it has one
-        child._parent = undefined;
+        // child now has no parent
+        child._parent = null;
 
-        // make sure the DOM knows
+        // send the dispatch
         this.dispatch('run-remove-child', child);
     }
     setChildAt(index, child) {
-        // get the old child at the index and remove it if needed
+        // get the old child at the index and remove it if it exists
         let old = this.children[index];
         if (old) this.removeChild(old);
 
@@ -105,7 +95,7 @@ class Model {
         this.events[event].add(listener);
     }
 
-    // stopl listenening for an event
+    // stop listenening for an event
     unlisten(event, listener) {
         if (!this.events[event]) return;
         this.events[event].delete(listener);

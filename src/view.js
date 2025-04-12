@@ -16,7 +16,7 @@ class View {
         this.element = element;
 
         // this is fired
-        // when the internal parent (_parent)
+        // when the parent
         // is changed, so we need to
         // do nothing
         // and NOT update the DOM since the model
