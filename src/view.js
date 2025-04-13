@@ -12,16 +12,16 @@
 
 // base view class
 class View {
-    constructor(element) {
-        this.element = element;
+    constructor(model) {
+        this.model = model;
 
         // this is fired when a child is inserted
         // at a specific index,
         // so we need to add it to the correct parent
-        this.element.listen('run-add-child', (child, index) => {
+        this.model.listen('run-add-child', (child, index) => {
             // get the child *after* this child
             // so we can use insertBefore
-            let after = this.element.children[index+1];
+            let after = this.model.children[index+1];
 
             if (after) {
                 // if there is a child after child,
@@ -36,7 +36,7 @@ class View {
 
         // this is fired
         // when a child is removed
-        this.element.listen('run-remove-child', child => {
+        this.model.listen('run-remove-child', child => {
             // simple, just call
             // removeChild to automatically
             // remove it. But check if it is a child
@@ -53,15 +53,15 @@ class View {
             }
         });
 
-        this.element.listen('run-add-class', cls => {
+        this.model.listen('run-add-class', cls => {
             this.top.classList.add(cls);
         });
 
-        this.element.listen('run-remove-class', cls => {
+        this.model.listen('run-remove-class', cls => {
             this.top.classList.remove(cls);
         });
 
-        this.element.listen('set-id', id => {
+        this.model.listen('set-id', id => {
             this.top.id = id;
         });
     }
@@ -69,29 +69,29 @@ class View {
 
 // basic container
 class ContainerView extends View {
-    constructor(element) {
-        super(element);
+    constructor(model) {
+        super(model);
 
         this.top = document.createElement('div');
-        this.element.addClass('gui-container');
+        this.model.addClass('gui-container');
         this.bottom = this.top;
     }
 }
 
 // allows adding Guim to DOM elements
 class WrapperView extends View {
-    constructor(element) {
-        super(element);
+    constructor(model) {
+        super(model);
 
         this.top = document.createElement('div');
-        this.element.addClass('gui-wrapper');
+        this.model.addClass('gui-wrapper');
         this.bottom = this.top;
 
-        this.element.listen('set-parent', () => {
+        this.model.listen('set-parent', () => {
             console.warn('Set the parent of a WrapperView, this is not reccomended');
         });
 
-        this.element.listen('set-element', element => {
+        this.model.listen('set-element', element => {
             element.appendChild(this.top);
         });
     }
@@ -99,14 +99,14 @@ class WrapperView extends View {
 
 // displys plain text
 class TextView extends View {
-    constructor(element) {
-        super(element);
+    constructor(model) {
+        super(model);
 
         this.top = document.createElement('span');
-        this.element.addClass('gui-text');
+        this.model.addClass('gui-text');
         this.bottom = this.top;
 
-        this.element.listen('set-text', text => {
+        this.model.listen('set-text', text => {
             this.top.textContent = text;
         })
     }
@@ -114,18 +114,18 @@ class TextView extends View {
 
 // image
 class ImageView extends View {
-    constructor(element) {
-        super(element);
+    constructor(model) {
+        super(model);
 
         this.top = document.createElement('img');
-        this.element.addClass('gui-image');
+        this.model.addClass('gui-image');
         this.bottom = this.top;
 
-        this.element.listen('set-src', src => {
+        this.model.listen('set-src', src => {
             this.top.src = src;
         });
 
-        this.element.listen('set-alt', alt => {
+        this.model.listen('set-alt', alt => {
             this.top.alt = alt;
         });
     }
@@ -133,27 +133,27 @@ class ImageView extends View {
 
 // generic button
 class ButtonView extends View {
-    constructor(element) {
-        super(element);
+    constructor(model) {
+        super(model);
 
         this.top = document.createElement('button');
-        this.element.addClass('gui-button');
+        this.model.addClass('gui-button');
         this.bottom = this.top;
 
         this.top.addEventListener('click', () => {
-            this.element.click();
+            this.model.click();
         });
     }
 }
 
 // text button
 class TextButtonView extends ButtonView {
-    constructor(element) {
-        super(element);
+    constructor(model) {
+        super(model);
 
-        this.element.addClass('gui-text-button');
+        this.model.addClass('gui-text-button');
 
-        this.element.listen('set-text', text => {
+        this.model.listen('set-text', text => {
             this.top.textContent = text;
         })
     }
