@@ -10,8 +10,8 @@
  * Contains component classes
  */
 
-const { ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel } = require('./model.js');
-const { ContainerView, TextView, ImageView, WrapperView, ButtonView, TextButtonView } = require('./view.js');
+const { ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel } = require('./model.js');
+const { ContainerView, TextView, ImageView, WrapperView, ButtonView, TextButtonView, ImageButtonView } = require('./view.js');
 
 // container
 class Container extends ContainerModel {
@@ -84,4 +84,17 @@ class TextButton extends TextButtonModel {
     }
 }
 
-module.exports = { Container, Wrapper, Text, Image, Button, TextButton };
+// button with an image
+class ImageButton extends ImageButtonModel {
+    constructor(src, alt, parent) {
+        super();
+
+        this.view = new ImageButtonView(this);
+
+        this.src = src;
+        this.alt = alt;
+        this.parent = parent;
+    }
+}
+
+module.exports = { Container, Wrapper, Text, Image, Button, TextButton, ImageButton };

@@ -267,4 +267,29 @@ class TextButtonModel extends ButtonModel {
     }
 }
 
-module.exports = { Model, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel };
+// image button
+class ImageButtonModel extends ButtonModel {
+    constructor() {
+        super();
+    }
+
+    // src model data
+    set src(src) {
+        this._src = src;
+        this.dispatch('set-src', this.src);
+    }
+    get src() {
+        return this._src;
+    }
+
+    // alt model data
+    set alt(alt) {
+        this._alt = alt;
+        this.dispatch('set-alt', this.alt);
+    }
+    get alt() {
+        return this._alt;
+    }
+}
+
+module.exports = { Model, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel };

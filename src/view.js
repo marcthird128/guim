@@ -159,4 +159,24 @@ class TextButtonView extends ButtonView {
     }
 }
 
-module.exports = { View, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView };
+// image button
+class ImageButtonView extends ButtonView {
+    constructor(model) {
+        super(model);
+
+        this.model.addClass('gui-image-button');
+        this.image = document.createElement('img');
+        this.image.classList.add('gui-image-button-image');
+        this.top.appendChild(this.image);
+
+        this.model.listen('set-src', src => {
+            this.image.src = src;
+        });
+
+        this.model.listen('set-alt', alt => {
+            this.image.alt = alt;
+        });
+    }
+}
+
+module.exports = { View, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView };
