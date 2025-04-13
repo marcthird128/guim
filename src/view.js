@@ -112,6 +112,25 @@ class TextView extends View {
     }
 }
 
+// image
+class ImageView extends View {
+    constructor(element) {
+        super(element);
+
+        this.top = document.createElement('img');
+        this.element.addClass('gui-image');
+        this.bottom = this.top;
+
+        this.element.listen('set-src', src => {
+            this.top.src = src;
+        });
+
+        this.element.listen('set-alt', alt => {
+            this.top.alt = alt;
+        });
+    }
+}
+
 // generic button
 class ButtonView extends View {
     constructor(element) {
@@ -140,4 +159,4 @@ class TextButtonView extends ButtonView {
     }
 }
 
-module.exports = { View, ContainerView, WrapperView, TextView, ButtonView, TextButtonView };
+module.exports = { View, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView };
