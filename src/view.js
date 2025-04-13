@@ -112,4 +112,32 @@ class TextView extends View {
     }
 }
 
-module.exports = { View, ContainerView, WrapperView, TextView };
+// generic button
+class ButtonView extends View {
+    constructor(element) {
+        super(element);
+
+        this.top = document.createElement('button');
+        this.element.addClass('gui-button');
+        this.bottom = this.top;
+
+        this.top.addEventListener('click', () => {
+            this.element.click();
+        });
+    }
+}
+
+// text button
+class TextButtonView extends ButtonView {
+    constructor(element) {
+        super(element);
+
+        this.element.addClass('gui-text-button');
+
+        this.element.listen('set-text', text => {
+            this.top.textContent = text;
+        })
+    }
+}
+
+module.exports = { View, ContainerView, WrapperView, TextView, ButtonView, TextButtonView };

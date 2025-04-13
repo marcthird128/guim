@@ -215,4 +215,31 @@ class TextModel extends Model {
     }
 }
 
-module.exports = { Model, ContainerModel, TextModel, WrapperModel };
+// generic button
+class ButtonModel extends Model {
+    constructor() {
+        super();
+    }
+
+    click() {
+        this.dispatch('click');
+    }
+}
+
+// text button
+class TextButtonModel extends ButtonModel {
+    constructor() {
+        super();
+    }
+    
+    // text model data
+    set text(text) {
+        this._text = text;
+        this.dispatch('set-text', this.text);
+    }
+    get text() {
+        return this._text;
+    }
+}
+
+module.exports = { Model, ContainerModel, TextModel, WrapperModel, ButtonModel, TextButtonModel };
