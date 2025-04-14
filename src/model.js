@@ -292,4 +292,22 @@ class ImageButtonModel extends ButtonModel {
     }
 }
 
-module.exports = { Model, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel };
+// text input
+class TextInputModel extends Model {
+    constructor() {
+        super();
+    }
+
+    // value model data
+    set value(value) {
+        this._value = value;
+        this.dispatch('set-value', this.value);
+    }
+    get value() {
+        return this._value;
+    }
+}
+module.exports = { 
+    Model, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
+    TextInputModel
+};

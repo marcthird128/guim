@@ -179,4 +179,27 @@ class ImageButtonView extends ButtonView {
     }
 }
 
-module.exports = { View, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView };
+// text input
+class TextInputView extends View {
+    constructor(model) {
+        super(model);
+
+        this.top = document.createElement('input');
+        this.top.type = 'text';
+        this.model.addClass('gui-text-input');
+        this.bottom = this.top;
+
+        this.model.listen('set-value', value => {
+            this.top.value = value;
+        });
+
+        this.top.addEventListener('input', () => {
+            this.model.value = this.top.value;
+        });
+    }
+}
+
+module.exports = { 
+    View, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView,
+    TextInputView
+};
