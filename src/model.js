@@ -247,7 +247,7 @@ class ButtonModel extends Model {
     }
 
     click() {
-        this.dispatch('click');
+        this.dispatch('run-click');
     }
 }
 

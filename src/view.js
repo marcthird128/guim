@@ -140,7 +140,7 @@ class ButtonView extends View {
         this.model.addClass('gui-button');
         this.bottom = this.top;
 
-        this.top.addEventListener('click', () => {
+        this.top.addEventListener('run-click', () => {
             this.model.click();
         });
     }
