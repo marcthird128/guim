@@ -179,6 +179,25 @@ class ImageButtonView extends ButtonView {
     }
 }
 
+// label
+class LabelView extends View {
+    constructor(model) {
+        super(model);
+
+        this.top = document.createElement('label');
+        this.model.addClass('gui-label');
+        this.bottom = this.top;
+
+        this.model.listen('set-text', text => {
+            this.top.textContent = text;
+        });
+
+        this.model.listen('set-target', target => {
+            this.top.htmlFor = target;
+        })
+    }
+}
+
 // text input
 class TextInputView extends View {
     constructor(model) {
@@ -201,5 +220,5 @@ class TextInputView extends View {
 
 module.exports = { 
     View, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView,
-    TextInputView
+    LabelView, TextInputView,
 };

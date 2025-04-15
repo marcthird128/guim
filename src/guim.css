@@ -19,12 +19,6 @@ html, body {
     background:#888;
 }
 
-.gui-button.gui-toggle-button.gui-toggle-button-active {
-    background:#888;
-}
-.gui-button.gui-toggle-button.gui-toggle-button-active:hover {
-    background:#666;
-}
-.gui-button.gui-toggle-button.gui-toggle-button-active:active {
-    background:#888;
+.gui-label {
+    user-select:none;
 }

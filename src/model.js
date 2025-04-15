@@ -147,7 +147,7 @@ class Model {
     hasClass(cls) {
         return this._classes.has(cls);
     }
-    
+
     // listen for an event
     listen(event, listener) {
         if (!this.events[event]) this.events[event] = new Set();
@@ -177,18 +177,12 @@ class Model {
 
 // basic container
 class ContainerModel extends Model {
-    constructor() {
-        super();
-    }
+    // nothing rn
 }
 
 
 // allows appending Guim componenets to DOM elements
 class WrapperModel extends Model {
-    constructor() {
-        super();
-    }
-
     // element model data
     set element(element) {
         this._element = element;
@@ -201,10 +195,6 @@ class WrapperModel extends Model {
 
 // simple text
 class TextModel extends Model {
-    constructor() {
-        super();
-    }
-    
     // text model data
     set text(text) {
         this._text = text;
@@ -217,10 +207,6 @@ class TextModel extends Model {
 
 // image
 class ImageModel extends Model {
-    constructor() {
-        super();
-    }
-
     // src model data
     set src(src) {
         this._src = src;
@@ -242,10 +228,6 @@ class ImageModel extends Model {
 
 // generic button
 class ButtonModel extends Model {
-    constructor() {
-        super();
-    }
-
     click() {
         this.dispatch('run-click');
     }
@@ -253,10 +235,6 @@ class ButtonModel extends Model {
 
 // text button
 class TextButtonModel extends ButtonModel {
-    constructor() {
-        super();
-    }
-    
     // text model data
     set text(text) {
         this._text = text;
@@ -269,10 +247,6 @@ class TextButtonModel extends ButtonModel {
 
 // image button
 class ImageButtonModel extends ButtonModel {
-    constructor() {
-        super();
-    }
-
     // src model data
     set src(src) {
         this._src = src;
@@ -292,12 +266,20 @@ class ImageButtonModel extends ButtonModel {
     }
 }
 
+// label
+class LabelModel extends TextModel {
+    // for model data
+    set target(target) {
+        this._target = target;
+        this.dispatch('set-target', this.target);
+    }
+    get target() {
+        return this._target;
+    }
+}
+
 // text input
 class TextInputModel extends Model {
-    constructor() {
-        super();
-    }
-
     // value model data
     set value(value) {
         this._value = value;
@@ -307,7 +289,8 @@ class TextInputModel extends Model {
         return this._value;
     }
 }
-module.exports = { 
+
+module.exports = {
     Model, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
-    TextInputModel
+    LabelModel, TextInputModel,
 };

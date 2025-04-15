@@ -13,13 +13,13 @@
 // import models
 const { 
     ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
-    TextInputModel
+    TextInputModel, LabelModel
 } = require('./model.js');
 
 // import views
 const { 
     ContainerView, TextView, ImageView, WrapperView, ButtonView, TextButtonView, ImageButtonView,
-    TextInputView
+    TextInputView, LabelView,
 } = require('./view.js');
 
 // container
@@ -106,6 +106,19 @@ class ImageButton extends ImageButtonModel {
     }
 }
 
+// label
+class Label extends LabelModel {
+    constructor(text, target, parent) {
+        super();
+
+        this.view = new LabelView(this);
+
+        this.text = text;
+        this.target = target;
+        this.parent = parent;
+    }
+}
+
 // text input
 class TextInput extends TextInputModel {
     constructor(value, parent) {
@@ -118,4 +131,4 @@ class TextInput extends TextInputModel {
     }
 }
 
-module.exports = { Container, Wrapper, Text, Image, Button, TextButton, ImageButton, TextInput };
+module.exports = { Container, Wrapper, Text, Image, Button, TextButton, ImageButton, Label, TextInput };
