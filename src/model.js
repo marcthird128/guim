@@ -186,12 +186,6 @@ class FocusableModel extends Model {
     }
 }
 
-// basic container
-class ContainerModel extends Model {
-    // nothing rn
-}
-
-
 // allows appending Guim componenets to DOM elements
 class WrapperModel extends Model {
     // element model data
