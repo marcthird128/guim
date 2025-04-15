@@ -14,7 +14,10 @@
 class View {
     constructor(model) {
         this.model = model;
+    }
 
+    // initializes the view
+    init() {
         // this is fired when a child is inserted
         // at a specific index,
         // so we need to add it to the correct parent
@@ -67,6 +70,31 @@ class View {
     }
 }
 
+// focusable
+class FocusableView extends View {
+    init() {
+        super.init();
+
+        this.model.listen('set-focused', () => {
+            if (this.model.focused)
+                this.top.focus();
+            else
+                this.top.blur();
+        })
+
+        this.top.addEventListener('focus', () => {
+            if (!this.model.focused)
+                this.model.focused = true;
+        })
+
+        this.top.addEventListener('blur', () => {
+            if (this.model.focused)
+                this.model.focused = false;
+        })
+    }
+}
+
+
 // basic container
 class ContainerView extends View {
     constructor(model) {
@@ -75,6 +103,12 @@ class ContainerView extends View {
         this.top = document.createElement('div');
         this.model.addClass('gui-container');
         this.bottom = this.top;
+
+        this.init();
+    }
+
+    init() {
+        super.init();
     }
 }
 
@@ -86,6 +120,12 @@ class WrapperView extends View {
         this.top = document.createElement('div');
         this.model.addClass('gui-wrapper');
         this.bottom = this.top;
+
+        this.init();
+    }
+
+    init() {
+        super.init();
 
         this.model.listen('set-parent', () => {
             console.warn('Set the parent of a WrapperView, this is not reccomended');
@@ -106,6 +146,12 @@ class TextView extends View {
         this.model.addClass('gui-text');
         this.bottom = this.top;
 
+        this.init();
+    }
+
+    init() {
+        super.init();
+
         this.model.listen('set-text', text => {
             this.top.textContent = text;
         })
@@ -120,6 +166,12 @@ class ImageView extends View {
         this.top = document.createElement('img');
         this.model.addClass('gui-image');
         this.bottom = this.top;
+
+        this.init();
+    }
+
+    init() {
+        super.init();
 
         this.model.listen('set-src', src => {
             this.top.src = src;
@@ -140,9 +192,15 @@ class ButtonView extends View {
         this.model.addClass('gui-button');
         this.bottom = this.top;
 
-        this.top.addEventListener('run-click', () => {
+        this.init();
+    }
+
+    init() {
+        super.init();
+
+        this.top.addEventListener('click', () => {
             this.model.click();
-        });
+        })
     }
 }
 
@@ -150,6 +208,12 @@ class ButtonView extends View {
 class TextButtonView extends ButtonView {
     constructor(model) {
         super(model);
+
+        this.init();
+    }
+
+    init() {
+        super.init();
 
         this.model.addClass('gui-text-button');
 
@@ -169,6 +233,12 @@ class ImageButtonView extends ButtonView {
         this.image.classList.add('gui-image-button-image');
         this.top.appendChild(this.image);
 
+        this.init();
+    }
+
+    init() {
+        super.init();
+
         this.model.listen('set-src', src => {
             this.image.src = src;
         });
@@ -187,6 +257,12 @@ class LabelView extends View {
         this.top = document.createElement('label');
         this.model.addClass('gui-label');
         this.bottom = this.top;
+
+        this.init();
+    }
+
+    init() {
+        super.init();
 
         this.model.listen('set-text', text => {
             this.top.textContent = text;
@@ -208,6 +284,12 @@ class TextInputView extends View {
         this.model.addClass('gui-text-input');
         this.bottom = this.top;
 
+        this.init();
+    }
+
+    init() {
+        super.init();
+
         this.model.listen('set-value', value => {
             this.top.value = value;
         });
@@ -218,7 +300,47 @@ class TextInputView extends View {
     }
 }
 
+// number input
+class NumberInputView extends FocusableView {
+    constructor(model) {
+        super(model);
+
+        this.top = document.createElement('input');
+        this.top.type = 'number';
+        this.model.addClass('gui-number-input');
+        this.bottom = this.top;
+
+        this.init();
+    }
+
+    init() {
+        super.init();
+
+        this.model.listen('set-value', value => {
+            this.top.value = value;
+        });
+
+        this.model.listen('set-min', min => {
+            this.top.min = min;
+        });
+
+        this.model.listen('set-max', max => {
+            this.top.max = max;
+        });
+
+        this.model.listen('set-step', step => {
+            this.top.step = step;
+        });
+
+        this.top.addEventListener('input', () => {
+            // IMPORTANT: make sure it changed or weird artifacts happen
+            if (this.model.value != this.top.value)
+                this.model.value = this.top.value;
+        });
+    }
+}
+
 module.exports = { 
-    View, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView,
-    LabelView, TextInputView,
+    View, FocusableView, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView,
+    LabelView, TextInputView, NumberInputView,
 };

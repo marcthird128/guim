@@ -175,6 +175,17 @@ class Model {
     }
 }
 
+// focusable
+class FocusableModel extends Model {
+    set focused(focused) {
+        this._focused = focused;
+        this.dispatch('set-focused', this.focused);
+    }
+    get focused() {
+        return this._focused;
+    }
+}
+
 // basic container
 class ContainerModel extends Model {
     // nothing rn
@@ -227,9 +238,9 @@ class ImageModel extends Model {
 }
 
 // generic button
-class ButtonModel extends Model {
+class ButtonModel extends FocusableModel {
     click() {
-        this.dispatch('run-click');
+        this.dispatch('click');
     }
 }
 
@@ -278,8 +289,8 @@ class LabelModel extends TextModel {
     }
 }
 
-// text input
-class TextInputModel extends Model {
+// input with value
+class ValueInputModel extends FocusableModel {
     // value model data
     set value(value) {
         this._value = value;
@@ -290,7 +301,37 @@ class TextInputModel extends Model {
     }
 }
 
+// number input
+class NumberInputModel extends ValueInputModel {
+    // min model data
+    set min(min) {
+        this._min = min;
+        this.dispatch('set-min', this.min);
+    }
+    get min() {
+        return this._min;
+    }
+
+    // max model data
+    set max(max) {
+        this._max = max;
+        this.dispatch('set-max', this.max);
+    }
+    get max() {
+        return this._max;
+    }
+
+    // step model data
+    set step(step) {
+        this._step = step;
+        this.dispatch('set-step', this.step);
+    }
+    get step() {
+        return this._step;
+    }
+}
+
 module.exports = {
-    Model, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
-    LabelModel, TextInputModel,
+    Model, FocusableModel, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
+    LabelModel, ValueInputModel, NumberInputModel,
 };
