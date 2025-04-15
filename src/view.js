@@ -108,9 +108,18 @@ class ContainerView extends View {
 
         this.init();
     }
+}
 
-    init() {
-        super.init();
+// div
+class DivView extends View {
+    constructor(model) {
+        super(model);
+
+        this.top = document.createElement('div');
+        this.bottom = this.top;
+        this.top.classList.add('gui-div');
+
+        this.init();
     }
 }
 
@@ -354,6 +363,6 @@ class NumberInputView extends InputView {
 }
 
 module.exports = { 
-    View, FocusableView, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView,
+    View, FocusableView, ContainerView, DivView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView,
     LabelView, InputView,TextInputView, NumberInputView,
 };

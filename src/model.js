@@ -76,6 +76,9 @@ class Model {
         // why do ppl expect libs to do everything?!?
         this._children.splice(index, 0, child);
 
+        // set childs parent to this
+        child._parent = this;
+
         // send the dispatch
         this.dispatch('run-add-child', child, index);
     }
@@ -189,6 +192,11 @@ class FocusableModel extends Model {
 // container model
 class ContainerModel extends Model {
     // nothing
+}
+
+// div model
+class DivModel extends Model {
+    // nothing;
 }
 
 // allows appending Guim componenets to DOM elements
@@ -331,6 +339,6 @@ class NumberInputModel extends InputModel {
 }
 
 module.exports = {
-    Model, FocusableModel, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
+    Model, FocusableModel, ContainerModel, DivModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
     LabelModel, InputModel, NumberInputModel,
 };

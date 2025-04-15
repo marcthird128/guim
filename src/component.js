@@ -12,13 +12,13 @@
 
 // import models
 const { 
-    ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
+    ContainerModel, DivModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
     LabelModel, InputModel, NumberInputModel,
 } = require('./model.js');
 
 // import views
 const { 
-    ContainerView, TextView, ImageView, WrapperView, ButtonView, TextButtonView, ImageButtonView,
+    ContainerView, DivView, TextView, ImageView, WrapperView, ButtonView, TextButtonView, ImageButtonView,
     TextInputView, LabelView, NumberInputView,
 } = require('./view.js');
 
@@ -28,6 +28,17 @@ class Container extends ContainerModel {
         super();
 
         this.view = new ContainerView(this);
+
+        this.parent = parent;
+    }
+}
+
+// div, container with no styling
+class Div extends DivModel {
+    constructor(parent) {
+        super();
+
+        this.view = new DivView(this);
 
         this.parent = parent;
     }
@@ -146,4 +157,4 @@ class NumberInput extends NumberInputModel {
     }
 }
 
-module.exports = { Container, Wrapper, Text, Image, Button, TextButton, ImageButton, Label, TextInput, NumberInput };
+module.exports = { Container, Div, Wrapper, Text, Image, Button, TextButton, ImageButton, Label, TextInput, NumberInput };

@@ -3,6 +3,22 @@ html, body {
     font-family:sans-serif;
 }
 
+.gui-container {
+    padding:8px;
+}
+
+.gui-container.gui-v-container {
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.gui-container.gui-h-container {
+    display:flex;
+    flex-direction:row;
+    gap:8px;
+}
+
 .gui-button {
     padding:4px 7px;
     background:#ccc;

@@ -3,16 +3,11 @@
     <head>
         <title>Guim Test</title>
         <link rel="stylesheet" type="text/css" href="src/guim.css"/>
-        <style>
-            .wrapper {
-                padding:20px;
-            }
-        </style>
     </head>
     <body>
         <script src="build/bundle.min.js"></script>
         <script>
-            let w = new guim.Wrapper(document.body); w.addClass('wrapper');
+            let w = new guim.Wrapper(document.body);
             let b = new guim.Button(w);
             let t = new guim.Text('Click me', b);
             let i = new guim.TextInput('Hello world', w);
