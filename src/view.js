@@ -75,6 +75,8 @@ class FocusableView extends View {
     init() {
         super.init();
 
+        this.top.classList.add('gui-focusable');
+
         this.model.listen('set-focused', () => {
             if (this.model.focused)
                 this.top.focus();
@@ -101,8 +103,8 @@ class ContainerView extends View {
         super(model);
 
         this.top = document.createElement('div');
-        this.model.addClass('gui-container');
         this.bottom = this.top;
+        this.top.classList.add('gui-container');
 
         this.init();
     }
@@ -118,8 +120,8 @@ class WrapperView extends View {
         super(model);
 
         this.top = document.createElement('div');
-        this.model.addClass('gui-wrapper');
         this.bottom = this.top;
+        this.top.classList.add('gui-wrapper');
 
         this.init();
     }
@@ -143,8 +145,8 @@ class TextView extends View {
         super(model);
 
         this.top = document.createElement('span');
-        this.model.addClass('gui-text');
-        this.bottom = this.top;
+        this.bottom = this.top;        
+        this.top.classList.add('gui-text');
 
         this.init();
     }
@@ -164,8 +166,8 @@ class ImageView extends View {
         super(model);
 
         this.top = document.createElement('img');
-        this.model.addClass('gui-image');
-        this.bottom = this.top;
+        this.bottom = this.top;        
+        this.top.classList.add('gui-image');
 
         this.init();
     }
@@ -184,13 +186,13 @@ class ImageView extends View {
 }
 
 // generic button
-class ButtonView extends View {
+class ButtonView extends FocusableView {
     constructor(model) {
         super(model);
 
         this.top = document.createElement('button');
-        this.model.addClass('gui-button');
-        this.bottom = this.top;
+        this.bottom = this.top;        
+        this.top.classList.add('gui-button');
 
         this.init();
     }
@@ -209,14 +211,15 @@ class TextButtonView extends ButtonView {
     constructor(model) {
         super(model);
 
+        this.top.classList.add('gui-text-button');
+
         this.init();
+
     }
 
     init() {
         super.init();
-
-        this.model.addClass('gui-text-button');
-
+        
         this.model.listen('set-text', text => {
             this.top.textContent = text;
         })
@@ -228,7 +231,8 @@ class ImageButtonView extends ButtonView {
     constructor(model) {
         super(model);
 
-        this.model.addClass('gui-image-button');
+        this.top.classList.add('gui-image-button');
+
         this.image = document.createElement('img');
         this.image.classList.add('gui-image-button-image');
         this.top.appendChild(this.image);
@@ -255,8 +259,8 @@ class LabelView extends View {
         super(model);
 
         this.top = document.createElement('label');
-        this.model.addClass('gui-label');
         this.bottom = this.top;
+        this.top.classList.add('gui-label');
 
         this.init();
     }
@@ -274,15 +278,24 @@ class LabelView extends View {
     }
 }
 
+// any input
+class InputView extends FocusableView {
+    init() {
+        super.init();
+
+        this.top.classList.add('gui-input');
+    }
+}
+
 // text input
-class TextInputView extends View {
+class TextInputView extends InputView {
     constructor(model) {
         super(model);
 
         this.top = document.createElement('input');
         this.top.type = 'text';
-        this.model.addClass('gui-text-input');
         this.bottom = this.top;
+        this.top.classList.add('gui-text-input');
 
         this.init();
     }
@@ -301,14 +314,14 @@ class TextInputView extends View {
 }
 
 // number input
-class NumberInputView extends FocusableView {
+class NumberInputView extends InputView {
     constructor(model) {
         super(model);
 
         this.top = document.createElement('input');
         this.top.type = 'number';
-        this.model.addClass('gui-number-input');
         this.bottom = this.top;
+        this.top.classList.add('gui-number-input');
 
         this.init();
     }
@@ -342,5 +355,5 @@ class NumberInputView extends FocusableView {
 
 module.exports = { 
     View, FocusableView, ContainerView, WrapperView, TextView, ImageView, ButtonView, TextButtonView, ImageButtonView,
-    LabelView, TextInputView, NumberInputView,
+    LabelView, InputView,TextInputView, NumberInputView,
 };

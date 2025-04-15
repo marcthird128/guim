@@ -19,6 +19,17 @@ html, body {
     background:#888;
 }
 
+.gui-focusable:focus {
+    outline:2px #666 solid;
+}
+
 .gui-label {
     user-select:none;
+}
+
+.gui-input {
+    background:white;
+    border:1px #aaa solid;
+    border-radius:3px;
+    padding:4px 7px;
 }

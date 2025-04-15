@@ -13,7 +13,7 @@
 // import models
 const { 
     ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
-    ValueInputModel, LabelModel, NumberInputModel,
+    LabelModel, InputModel, NumberInputModel,
 } = require('./model.js');
 
 // import views
@@ -120,7 +120,7 @@ class Label extends LabelModel {
 }
 
 // text input
-class TextInput extends ValueInputModel {
+class TextInput extends InputModel {
     constructor(value, parent) {
         super();
 

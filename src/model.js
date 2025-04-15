@@ -186,6 +186,11 @@ class FocusableModel extends Model {
     }
 }
 
+// container model
+class ContainerModel extends Model {
+    // nothing
+}
+
 // allows appending Guim componenets to DOM elements
 class WrapperModel extends Model {
     // element model data
@@ -284,7 +289,7 @@ class LabelModel extends TextModel {
 }
 
 // input with value
-class ValueInputModel extends FocusableModel {
+class InputModel extends FocusableModel {
     // value model data
     set value(value) {
         this._value = value;
@@ -296,7 +301,7 @@ class ValueInputModel extends FocusableModel {
 }
 
 // number input
-class NumberInputModel extends ValueInputModel {
+class NumberInputModel extends InputModel {
     // min model data
     set min(min) {
         this._min = min;
@@ -327,5 +332,5 @@ class NumberInputModel extends ValueInputModel {
 
 module.exports = {
     Model, FocusableModel, ContainerModel, TextModel, ImageModel, WrapperModel, ButtonModel, TextButtonModel, ImageButtonModel,
-    LabelModel, ValueInputModel, NumberInputModel,
+    LabelModel, InputModel, NumberInputModel,
 };
