@@ -7,13 +7,13 @@ html, body {
     padding:8px;
 }
 
-.gui-container.gui-v-container {
+.gui-v {
     display:flex;
     flex-direction:column;
     gap:8px;
 }
 
-.gui-container.gui-h-container {
+.gui-h {
     display:flex;
     flex-direction:row;
     gap:8px;

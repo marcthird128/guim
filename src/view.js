@@ -356,7 +356,7 @@ class NumberInputView extends InputView {
 
         this.top.addEventListener('input', () => {
             // IMPORTANT: make sure it changed or weird artifacts happen
-            if (this.model.value != this.top.value)
+            if (this.model.value != this.top.value) 
                 this.model.value = this.top.value;
         });
     }
